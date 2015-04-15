@@ -10,6 +10,7 @@
 		54C7F7121ADDCC6E008BD2BB /* DataFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C7F7111ADDCC6E008BD2BB /* DataFeed.swift */; };
 		54C7F7141ADDCF01008BD2BB /* DataFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C7F7131ADDCF01008BD2BB /* DataFeedViewController.swift */; };
 		54C7F7181ADDDD23008BD2BB /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 54C7F7171ADDDD23008BD2BB /* Favorite.png */; };
+		54C7F7241ADEFA2E008BD2BB /* CellDataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C7F7231ADEFA2E008BD2BB /* CellDataStructure.swift */; };
 		66588BE61ADCD14A0019BD3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66588BE51ADCD14A0019BD3D /* AppDelegate.swift */; };
 		66588BEB1ADCD14A0019BD3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66588BE91ADCD14A0019BD3D /* Main.storyboard */; };
 		66588BED1ADCD14A0019BD3D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66588BEC1ADCD14A0019BD3D /* Images.xcassets */; };
@@ -45,6 +46,7 @@
 		54C7F7111ADDCC6E008BD2BB /* DataFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFeed.swift; sourceTree = "<group>"; };
 		54C7F7131ADDCF01008BD2BB /* DataFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFeedViewController.swift; sourceTree = "<group>"; };
 		54C7F7171ADDDD23008BD2BB /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Favorite.png; sourceTree = "<group>"; };
+		54C7F7231ADEFA2E008BD2BB /* CellDataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDataStructure.swift; sourceTree = "<group>"; };
 		66588BE01ADCD14A0019BD3D /* Hackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66588BE41ADCD14A0019BD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66588BE51ADCD14A0019BD3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				66E977E01ADDCF8900D56C55 /* AngleListTableViewController.swift */,
 				66E977E21ADDD0F400D56C55 /* AngleTableViewCell.swift */,
 				66E977E51ADDD1B100D56C55 /* jobDetailViewController.swift */,
+				54C7F7231ADEFA2E008BD2BB /* CellDataStructure.swift */,
 				66E977E41ADDD12300D56C55 /* old */,
 				6689736E1ADCD67300CBDA10 /* outSource */,
 				66588BEC1ADCD14A0019BD3D /* Images.xcassets */,
@@ -353,6 +356,7 @@
 			files = (
 				668973701ADCD8CE00CBDA10 /* Alamofire.swift in Sources */,
 				66588BE61ADCD14A0019BD3D /* AppDelegate.swift in Sources */,
+				54C7F7241ADEFA2E008BD2BB /* CellDataStructure.swift in Sources */,
 				54C7F7141ADDCF01008BD2BB /* DataFeedViewController.swift in Sources */,
 				66E977E61ADDD1B100D56C55 /* jobDetailViewController.swift in Sources */,
 				66588C061ADCD24B0019BD3D /* MainViewController.swift in Sources */,

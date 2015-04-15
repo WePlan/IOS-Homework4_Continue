@@ -8,35 +8,35 @@
 
 import UIKit
 
-class AngleListTableViewController: UITableViewController , UISearchBarDelegate {
-    struct tag {
-        var tagType : String
-        var tagName : String
-    }
+class AngleListTableViewController: UITableViewController , UISearchBarDelegate, UITableViewDelegate {
+//    struct tag {
+//        var tagType : String
+//        var tagName : String
+//    }
     
-    struct CellData {
-        
-        var jobTitle : String
-        var jobType : String
-        var createdAt : String
-        var updatedAt : String
-        var salaryMin : String
-        var salaryMax : String
-        var jobDesc : String
-        var angellistURL : String
-        
-        var companyName : String
-        var companyFDesc : String
-        var companyHDesc : String
-        var companyLogoURL : String
-        var companyURL : String
-        
-        var tags : [tag]
-    }
+//    struct CellData {
+//        
+//        var jobTitle : String
+//        var jobType : String
+//        var createdAt : String
+//        var updatedAt : String
+//        var salaryMin : String
+//        var salaryMax : String
+//        var jobDesc : String
+//        var angellistURL : String
+//        
+//        var companyName : String
+//        var companyFDesc : String
+//        var companyHDesc : String
+//        var companyLogoURL : String
+//        var companyURL : String
+//        
+//        var tags : [tag]
+//    }
     
     
     var myData: [CellData] = []
-    
+    var selected: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -121,8 +121,10 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate 
         
 
     }
-
-    
+    // MARK: - StoryBoardConstants
+    private struct StoryBoardConstants {
+        static let detailSegue = "jobDetail"
+    }
 
     // MARK: - Table view data source
 
@@ -149,7 +151,11 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate 
         return cell
     }
 
-
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("eee")
+        self.selected = indexPath.row
+//        performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -189,14 +195,20 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == StoryBoardConstants.detailSegue {
+            if let jobDetailController = segue.destinationViewController as? jobDetailViewController {
+                jobDetailController.jobDetail = myData[selected]
+                
+            }
+        }
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
     }
-    */
+    
 
 }
