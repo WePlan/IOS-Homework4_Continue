@@ -54,7 +54,9 @@ class jobDetailViewController: UIViewController {
         companyNameLabel?.text = jobDetail!.companyName
         jobTitleLabel?.text = jobDetail!.jobTitle ?? ""
         jobTypeLabel?.text = jobDetail!.jobType ?? ""
-        
+        locationTagLabel?.text = ""
+        jobRoleTagLabel?.text = ""
+        skillTagText?.text = ""
         for tag in jobDetail!.tags {
         
             if tag.tagType == JobDetailConstants.RollTag {
@@ -71,7 +73,8 @@ class jobDetailViewController: UIViewController {
 
             
         }
-        salaryLabel?.text = jobDetail!.salaryMin + " ~ " + jobDetail!.salaryMax
+        let divideSign = jobDetail!.salaryMin != "" && jobDetail!.salaryMax != "" ? "~" : ""
+        salaryLabel?.text = jobDetail!.salaryMin + divideSign + jobDetail!.salaryMax
         let description = jobDetail!.jobDesc + jobDetail!.companyFDesc
         jobAndCompanyText?.text = description
         

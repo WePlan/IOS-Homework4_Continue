@@ -197,13 +197,10 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     }
     
     // MARK: - Navigation
-    var i = 0
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == StoryBoardConstants.detailSegue {
             if let jobDetailController = segue.destinationViewController as? jobDetailViewController {
-                println(i)
-                i += 1
                 jobDetailController.jobDetail = myData[selected]
                 
             }
