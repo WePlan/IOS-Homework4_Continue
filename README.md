@@ -4,12 +4,12 @@
 #Project Description : 
 1. Providing abundant information about openning job position of the start-up companies. 
 2. User could filter the result by searching with different kinds of keywords. 
-Such like :
-1). Job Title.
-2). Job Type.
-3). Salary
-4). Company Name.
-5). Tags : (Skills, Location, Role)
+#Keywords include :
+1. Job Title.
+2. Job Type.
+3. Salary
+4. Company Name.
+5. Tags : (Skills, Location, Role)
 #Team Members : 
 1. Kan Chen (kc2386@nyu.edu, N14160813)
 2. Zhaonan Zhang (zz724@nyu.edu, N18858668)
