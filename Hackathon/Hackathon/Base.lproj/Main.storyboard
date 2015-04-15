@@ -327,6 +327,9 @@
                                 <state key="normal" backgroundImage="Favorite">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="markAsInterested:" destination="Yt0-4o-sW0" eventType="touchUpInside" id="l4S-2K-Cd5"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jobtag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqm-Xu-UyR">
                                 <rect key="frame" x="16" y="233" width="568" height="15"/>
@@ -384,6 +387,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="C82-I1-AIS"/>
+                    <connections>
+                        <outlet property="companyLogo" destination="N4d-HQ-p9l" id="Vxs-Uo-bWF"/>
+                        <outlet property="companyNameLabel" destination="6Ah-3f-Bfr" id="d1j-3h-itF"/>
+                        <outlet property="jobAndCompanyText" destination="d3b-R4-ZTz" id="crg-ze-bM7"/>
+                        <outlet property="jobRoleTagLabel" destination="Gqm-Xu-UyR" id="2io-HC-fax"/>
+                        <outlet property="jobTitleLabel" destination="0F8-am-MFS" id="1Jb-FV-d7N"/>
+                        <outlet property="jobTypeLabel" destination="ZIA-fu-OJy" id="bBn-Cx-X3L"/>
+                        <outlet property="locationTagLabel" destination="5dB-XZ-iZd" id="I9I-41-wEj"/>
+                        <outlet property="markAsInterestedButton" destination="6O2-Vt-tIp" id="7vw-dN-hH0"/>
+                        <outlet property="salaryLabel" destination="z7k-zK-eV3" id="eqK-31-4aJ"/>
+                        <outlet property="skillTageText" destination="emk-a9-SK0" id="AA0-Gn-HjT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bmN-ss-PWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
