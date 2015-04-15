@@ -2,7 +2,7 @@
 #Team Name : WePlan
 #Project Name : Job Hunter
 #Project Description : 
-Providing abundant information about openning job position of the start-up companies. User could search the records by typing different kinds of keywords.
+Providing abundant information about openning job position of the start-up companies. User could filter the result by searching with different kinds of keywords.
 #Team Members : 
 1. Kan Chen (kc2386@nyu.edu, N14160813)
 2. Zhaonan Zhang (zz724@nyu.edu, N18858668)
