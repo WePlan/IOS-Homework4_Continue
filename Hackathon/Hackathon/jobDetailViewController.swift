@@ -9,11 +9,12 @@
 import UIKit
 
 class jobDetailViewController: UIViewController {
-    var jobDetail: CellData? {
-        didSet{
-            updateData()
-        }
-    }
+    var jobDetail: CellData?
+//    {
+//        didSet{
+//            updateData()
+//        }
+//    }
 
     // MARK: JobDetailConstants
     private struct JobDetailConstants {
@@ -39,14 +40,14 @@ class jobDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateData()
+//        updateData()
 
         // Do any additional setup after loading the view.
     }
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated)
-//        updateData()
-//    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        updateData()
+    }
     func updateData() {
         companyLogo?.url = NSURL(string:jobDetail!.companyLogoURL ?? "")
 

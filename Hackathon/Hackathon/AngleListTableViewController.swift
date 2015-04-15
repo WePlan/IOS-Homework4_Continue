@@ -154,7 +154,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("eee")
         self.selected = indexPath.row
-//        performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
+        self.performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
     }
     /*
     // Override to support conditional editing of the table view.
@@ -197,11 +197,13 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     }
     
     // MARK: - Navigation
-
+    var i = 0
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == StoryBoardConstants.detailSegue {
             if let jobDetailController = segue.destinationViewController as? jobDetailViewController {
+                println(i)
+                i += 1
                 jobDetailController.jobDetail = myData[selected]
                 
             }
