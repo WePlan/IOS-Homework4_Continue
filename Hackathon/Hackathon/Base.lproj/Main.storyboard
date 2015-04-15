@@ -201,7 +201,7 @@
                                     <outlet property="CompanyImage" destination="S0m-wi-Hrk" id="wGk-Ru-SXJ"/>
                                     <outlet property="Companytitle" destination="GLi-hy-Qht" id="IiT-je-ixM"/>
                                     <outlet property="Jobtitle" destination="i0G-he-FED" id="Oil-Fl-AmP"/>
-                                    <segue destination="Yt0-4o-sW0" kind="show" identifier="jobDetail" id="0Nr-qR-3iD"/>
+                                    <segue destination="2jc-dY-LUk" kind="show" identifier="jobDetail" id="0Nr-qR-3iD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -383,8 +383,27 @@
                             <constraint firstItem="6Ah-3f-Bfr" firstAttribute="centerX" secondItem="N4d-HQ-p9l" secondAttribute="centerX" id="zxs-fH-hEm"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="C82-I1-AIS"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bmN-ss-PWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2408" y="420"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="48n-hM-Dcd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2jc-dY-LUk" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="D8F-c6-1Iy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Yt0-4o-sW0" kind="relationship" relationship="rootViewController" id="lhj-vp-C6M"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5SA-0r-1Vo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1596" y="420"/>
         </scene>
