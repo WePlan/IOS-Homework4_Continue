@@ -107,8 +107,14 @@ class jobDetailViewController: UIViewController {
         textViewContent.appendAttributedString(compInfo)
         
         
-        let description = jobDetail!.jobDesc + "\n" + "Company Info" + "\n" + jobDetail!.companyURL + "\n" + jobDetail!.companyHDesc + "\n" + jobDetail!.companyFDesc
         jobAndCompanyText?.attributedText = textViewContent
+        jobAndCompanyText.layer.cornerRadius = 10.0
+        jobAndCompanyText.layer.shadowOpacity = 0.9
+        jobAndCompanyText.layer.shadowOffset = CGSize(width: 0, height: 5)
+        
+//        jobAndCompanyText.layer.masksToBounds = false
+
+
         
     }
     override func didReceiveMemoryWarning() {
