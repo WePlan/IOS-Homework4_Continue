@@ -32,10 +32,8 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
        
         configureSegment()
         
-        var tableRefreshController = UIRefreshControl()
-        tableRefreshController.addTarget(self, action: "handleRefresh", forControlEvents: UIControlEvents.ValueChanged)
-        
-        self.refreshControl = tableRefreshController
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: "handleRefresh", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     func handleRefresh() {
@@ -79,7 +77,6 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
         }//end closure
-        
 
     }
     
@@ -120,10 +117,8 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                     self.myData.append(newData!)
                 }
             }
-             self.tableView.reloadData()
+            self.tableView.reloadData()
         }//end closure
-    
-
     }
     
     private func configureSegment () {
