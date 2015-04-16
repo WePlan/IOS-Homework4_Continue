@@ -9,38 +9,19 @@
 import UIKit
 
 class AngleListTableViewController: UITableViewController , UISearchBarDelegate, UITableViewDelegate {
-//    struct tag {
-//        var tagType : String
-//        var tagName : String
-//    }
-    
-//    struct CellData {
-//        
-//        var jobTitle : String
-//        var jobType : String
-//        var createdAt : String
-//        var updatedAt : String
-//        var salaryMin : String
-//        var salaryMax : String
-//        var jobDesc : String
-//        var angellistURL : String
-//        
-//        var companyName : String
-//        var companyFDesc : String
-//        var companyHDesc : String
-//        var companyLogoURL : String
-//        var companyURL : String
-//        
-//        var tags : [tag]
-//    }
+    @IBOutlet weak var searchBar: UISearchBar!
     
     
     var myData: [CellData] = []
+    var myFilterData: [CellData] = []
     var selected: Int = 0
+    var searchState: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
+        searchBar.delegate = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -52,8 +33,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
             requestItem.responseJSON{
                 (request,response,data,error) in
                 var json = JSON(data!)
-//                println(self.json)
-                
+
                 for (key: String, subJson: JSON) in json["jobs"] {
                     var newData: CellData?
                     //Job info
@@ -65,15 +45,12 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                     let salaryMin = subJson["salary_min"].string ?? ""
                     let salaryMax = subJson["salary_max"].string ?? ""
                     let angellistURL = subJson["angellist_url"].string ?? ""
-                    
                     //company info
-                    
                     let companyName = subJson["startup"]["name"].string ?? ""
                     let companyFDesc = subJson["startup"]["product_desc"].string ?? ""
                     let companyHDesc = subJson["startup"]["high_concept"].string ?? ""
                     let img = subJson["startup"]["logo_url"].string ?? "no image"
                     let companyURL = subJson["startup"]["company_url"].string ?? ""
-                    
                     //tags info
                     var tags = [tag]()
                     for (keyTag: String, eachtag: JSON) in subJson["tags"]{
@@ -83,38 +60,10 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                     }
                     
                     newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
-//                    //Job info
-//                    let jobTitle = subJson["title"].string ?? ""
-//                    let jobDesc = subJson["description"].string ?? ""
-//                    var tags = [String]()
-//                    for (keyTag: String, tag: JSON) in subJson["tags"]{
-//                        tags.append(tag["display_name"].string ?? "")
-//                    }
-//                    let createAt = subJson["created_at"].string ?? ""
-//                    let jobType = subJson["job_type"].string ?? ""
-//                    //                println("tag:\(tags)")
-////                    newData.jobTitle = jobTitle
-//                    //company info
-//                    if subJson["startup"] != nil{
-//                        let companyName = subJson["startup"]["name"].string ?? ""
-//                        let img = subJson["startup"]["logo_url"].string ?? "no image"
-//                        let smallImg = subJson["startup"]["thumb_url"].string ?? ""
-//                        let companyShortDesc = subJson["startup"]["high_concept"].string ?? ""
-//                        
-//                        let companyURL = subJson["startup"]["company_url"].string ?? ""
-//                        let companyFullDesc = subJson["startup"]["product_desc"].string ?? ""
-//                        // println("Description:\(jobDesc)")
-//                        //println("url_logo:\(img)")
-//                        //println("company_short_concept:\(companyShortDesc)")
-//                        newData = CellData(jobTitle: jobTitle, company: companyName, logoURL: img)
-////                        newData.company = companyName
-////                        newData.logoURL = img
-//                    }
                     if newData != nil {
                         self.myData.append(newData!)
                     }
                 }
-                
                 self.tableView.reloadData()
             }//end closure
         }
@@ -137,7 +86,13 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return self.myData.count
+        var numberOfRows = 0 ;
+        if searchState {
+            numberOfRows = self.myFilterData.count
+        }else {
+            numberOfRows = self.myData.count
+        }
+        return numberOfRows
     }
 
     
@@ -145,9 +100,15 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         let cell = tableView.dequeueReusableCellWithIdentifier("protojob", forIndexPath: indexPath) as! AngleTableViewCell
 
         // Configure the cell...
-        cell.Jobtitle.text = myData[indexPath.row].jobTitle
-        cell.Companytitle.text = myData[indexPath.row].companyName
-        cell.logourl = NSURL(string: myData[indexPath.row].companyLogoURL)
+        if searchState {
+            cell.Jobtitle.text = myFilterData[indexPath.row].jobTitle
+            cell.Companytitle.text = myFilterData[indexPath.row].companyName
+            cell.logourl = NSURL(string: myFilterData[indexPath.row].companyLogoURL)
+        }else {
+            cell.Jobtitle.text = myData[indexPath.row].jobTitle
+            cell.Companytitle.text = myData[indexPath.row].companyName
+            cell.logourl = NSURL(string: myData[indexPath.row].companyLogoURL)
+        }
         return cell
     }
 
@@ -193,7 +154,24 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
 
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        //
+        if count(searchText) == 0 {
+            self.searchState = false
+            return
+        }
+        
+        self.searchState = true
+        let predicate: NSPredicate = NSPredicate(format: "self contains [cd] %@",searchText)
+        var originArray = NSArray()
+        println("we have \(myData.count) rows")
+        self.myFilterData = []
+        for var i = 0; i < myData.count ; i++ {
+            if predicate.evaluateWithObject(myData[i].jobTitle) {
+//                println("index \(i) is matched")
+                self.myFilterData.append(self.myData[i])
+            }
+        }
+        self.tableView.reloadData()
+        
     }
     
     // MARK: - Navigation
@@ -201,7 +179,11 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == StoryBoardConstants.detailSegue {
             if let jobDetailController = segue.destinationViewController as? jobDetailViewController {
-                jobDetailController.jobDetail = myData[selected]
+                if searchState {
+                    jobDetailController.jobDetail = myFilterData[selected]
+                }else {
+                    jobDetailController.jobDetail = myData[selected]
+                }
                 
             }
         }

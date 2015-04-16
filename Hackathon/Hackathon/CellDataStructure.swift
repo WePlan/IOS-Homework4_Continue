@@ -8,7 +8,7 @@
 
 import Foundation
 
-    struct tag {
+struct tag {
         var tagType : String
         var tagName : String
     }

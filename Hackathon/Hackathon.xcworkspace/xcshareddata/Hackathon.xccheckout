@@ -12,20 +12,24 @@
 	<dict>
 		<key>341B11E0B571FFA4304DF4DAD969F99CED065529</key>
 		<string>https://github.com/WePlan/iOS-Homework4.git</string>
+		<key>ECD60052E66161502B0CF8739C5886C49413A623</key>
+		<string>https://github.com/WePlan/IOS-Homework4_Continue.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Hackathon/Hackathon.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>341B11E0B571FFA4304DF4DAD969F99CED065529</key>
+		<string>../../../iOS-Homework4</string>
+		<key>ECD60052E66161502B0CF8739C5886C49413A623</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/WePlan/iOS-Homework4.git</string>
+	<string>https://github.com/WePlan/IOS-Homework4_Continue.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>341B11E0B571FFA4304DF4DAD969F99CED065529</string>
+	<string>ECD60052E66161502B0CF8739C5886C49413A623</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>341B11E0B571FFA4304DF4DAD969F99CED065529</string>
 			<key>IDESourceControlWCCName</key>
 			<string>iOS-Homework4</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ECD60052E66161502B0CF8739C5886C49413A623</string>
+			<key>IDESourceControlWCCName</key>
+			<string>IOS-Homework4_Continue</string>
 		</dict>
 	</array>
 </dict>
