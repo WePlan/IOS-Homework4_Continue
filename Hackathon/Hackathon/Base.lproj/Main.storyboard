@@ -194,13 +194,13 @@
                                                 <constraint firstAttribute="width" secondItem="S0m-wi-Hrk" secondAttribute="height" multiplier="1:1" id="wuM-L4-cgN"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JobName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLi-hy-Qht">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLi-hy-Qht">
                                             <rect key="frame" x="66" y="13" width="526" height="20"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CompanyName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0G-he-FED">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jobtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0G-he-FED">
                                             <rect key="frame" x="66" y="41" width="526" height="14"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -237,9 +237,21 @@
                             <outlet property="delegate" destination="b5f-NM-TOQ" id="wYf-F2-GpU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="7Jv-E3-osy"/>
+                    <navigationItem key="navigationItem" id="7Jv-E3-osy">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="dHe-ld-s0Z">
+                            <rect key="frame" x="87" y="7" width="427" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                                <segment title=""/>
+                            </segments>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="pAj-Eh-WXa" id="b5W-SP-aed"/>
+                        <outlet property="segment" destination="dHe-ld-s0Z" id="Na2-ss-ZtI"/>
                         <segue destination="Yt0-4o-sW0" kind="show" identifier="jobDetail" id="apW-38-4Bi"/>
                     </connections>
                 </tableViewController>

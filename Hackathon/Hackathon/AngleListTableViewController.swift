@@ -11,6 +11,7 @@ import UIKit
 class AngleListTableViewController: UITableViewController , UISearchBarDelegate, UITableViewDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBOutlet weak var segment: UISegmentedControl!
     
     var myData: [CellData] = []
     var myFilterData: [CellData] = []
@@ -68,7 +69,14 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
             }//end closure
         }
         
-
+        configureSegment()
+    }
+    
+    private func configureSegment () {
+        self.segment.setTitle("Company", forSegmentAtIndex: 0)
+        self.segment.setTitle("Job", forSegmentAtIndex: 1)
+//        self.segment.setTitle("Salary", forSegmentAtIndex: 2)
+        self.segment.setTitle("type", forSegmentAtIndex: 2)
     }
     // MARK: - StoryBoardConstants
     private struct StoryBoardConstants {
@@ -160,14 +168,38 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         }
         
         self.searchState = true
-        let predicate: NSPredicate = NSPredicate(format: "self contains [cd] %@",searchText)
+        
         var originArray = NSArray()
-        println("we have \(myData.count) rows")
+//        println("we have \(myData.count) rows")
         self.myFilterData = []
         for var i = 0; i < myData.count ; i++ {
-            if predicate.evaluateWithObject(myData[i].jobTitle) {
-//                println("index \(i) is matched")
-                self.myFilterData.append(self.myData[i])
+            switch self.segment.selectedSegmentIndex {
+            case 0: // company name
+                let predicate: NSPredicate = NSPredicate(format: "self contains [cd] %@",searchText)
+                if predicate.evaluateWithObject(myData[i].companyName) {
+                    self.myFilterData.append(self.myData[i])
+                }
+            case 1: // job title
+                let predicate: NSPredicate = NSPredicate(format: "self contains [cd] %@",searchText)
+                if predicate.evaluateWithObject(myData[i].jobTitle) {
+                    self.myFilterData.append(self.myData[i])
+                }
+//            case 2: //
+//                if searchText.toInt() != nil {
+//                    let predicate: NSPredicate = NSPredicate(format: "self >= %d",searchText.toInt()!)
+//                    if let min = myData[i].salaryMin.toInt() {
+//                        if predicate.evaluateWithObject(min) {
+//                            self.myFilterData.append(self.myData[i])
+//                        }
+//                    }
+//                }
+            case 2:
+                let predicate: NSPredicate = NSPredicate(format: "self contains [cd] %@",searchText)
+                if predicate.evaluateWithObject(myData[i].jobType) {
+                    self.myFilterData.append(self.myData[i])
+                }
+            default:
+                break
             }
         }
         self.tableView.reloadData()
