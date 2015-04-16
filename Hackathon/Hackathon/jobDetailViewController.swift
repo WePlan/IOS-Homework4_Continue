@@ -30,8 +30,9 @@ class jobDetailViewController: UIViewController {
     @IBOutlet weak var locationTagLabel: UILabel!
     @IBOutlet weak var salaryLabel: UILabel!
     @IBOutlet weak var skillTagText: UILabel!
-    @IBOutlet weak var jobAndCompanyText: UITextView!
+//    @IBOutlet weak var jobAndCompanyText: UITextView!
     
+    @IBOutlet weak var jobAndCompanyText: UILabel!
     
     //if have time could impletement this to mark as interested
     @IBOutlet weak var markAsInterestedButton: UIButton!
@@ -75,8 +76,29 @@ class jobDetailViewController: UIViewController {
         }
         let divideSign = jobDetail!.salaryMin != "" && jobDetail!.salaryMax != "" ? "~" : ""
         salaryLabel?.text = jobDetail!.salaryMin + divideSign + jobDetail!.salaryMax
-        let description = jobDetail!.jobDesc + jobDetail!.companyFDesc
-        jobAndCompanyText?.text = description
+        
+        let jobDescAttr = [NSFontAttributeName:UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)]
+        let companyNameAttr = [NSFontAttributeName:UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+        let companySDescAttr = [NSFontAttributeName:UIFont.preferredFontForTextStyle(UIFontTextStyleCaption2)]
+        let urlAttr = [NSFontAttributeName:UIFont.preferredFontForTextStyle(UIFontTextStyleCaption2),NSForegroundColorAttributeName:UIColor.blueColor()]
+        let companyDescAttr = [NSFontAttributeName:UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)]
+        
+        var textViewContent = NSMutableAttributedString()
+        let jobInfo = NSAttributedString(string: jobDetail!.jobDesc, attributes: jobDescAttr)
+        let compTitle = NSAttributedString(string: "\n\n" + jobDetail!.companyName + ":", attributes: companyNameAttr)
+        let compShortInfo = NSAttributedString(string: "\t" + jobDetail!.companyHDesc, attributes: companySDescAttr)
+        let compURL = NSAttributedString(string: "\n" + jobDetail!.companyURL, attributes: urlAttr)
+        let compInfo = NSAttributedString(string: "\n\n" + jobDetail!.companyFDesc, attributes: companyDescAttr)
+        
+        textViewContent.appendAttributedString(jobInfo)
+        textViewContent.appendAttributedString(compTitle)
+        textViewContent.appendAttributedString(compShortInfo)
+        textViewContent.appendAttributedString(compURL)
+        textViewContent.appendAttributedString(compInfo)
+        
+        
+        let description = jobDetail!.jobDesc + "\n" + "Company Info" + "\n" + jobDetail!.companyURL + "\n" + jobDetail!.companyHDesc + "\n" + jobDetail!.companyFDesc
+        jobAndCompanyText?.attributedText = textViewContent
         
     }
     override func didReceiveMemoryWarning() {
