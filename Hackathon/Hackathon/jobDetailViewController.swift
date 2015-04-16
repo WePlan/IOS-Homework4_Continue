@@ -36,7 +36,17 @@ class jobDetailViewController: UIViewController {
     
     //if have time could impletement this to mark as interested
     @IBOutlet weak var markAsInterestedButton: UIButton!
+    var selected = false
     @IBAction func markAsInterested(sender: UIButton) {
+        
+        selected = !selected
+        
+        if selected {
+            markAsInterestedButton.setImage(UIImage(named: "Favorite-selected"), forState: UIControlState.Normal)
+        }else{
+            markAsInterestedButton.setImage(UIImage(named: "Favorite"), forState: UIControlState.Normal)
+        }
+        
         
     }
     override func viewDidLoad() {
@@ -61,14 +71,14 @@ class jobDetailViewController: UIViewController {
         for tag in jobDetail!.tags {
         
             if tag.tagType == JobDetailConstants.RollTag {
-                let dot = jobRoleTagLabel?.text == "" ? "": "."
+                let dot = jobRoleTagLabel?.text == "" ? "": "·"
                 jobRoleTagLabel?.text?.extend(dot + tag.tagName ?? "")
             }
             if tag.tagType == JobDetailConstants.LocationTag {
                 locationTagLabel?.text?.extend(tag.tagName ?? "")
             }
             if tag.tagType == JobDetailConstants.SkillTag {
-                let dot = skillTagText?.text == "" ? "": "."
+                let dot = skillTagText?.text == "" ? "": " · "
                 skillTagText?.text?.extend(dot + tag.tagName ?? "")
             }
 
