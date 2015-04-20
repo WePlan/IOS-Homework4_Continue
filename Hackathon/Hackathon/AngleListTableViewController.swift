@@ -8,9 +8,8 @@
 
 import UIKit
 
-class AngleListTableViewController: UITableViewController , UISearchBarDelegate, UITableViewDelegate {
+class AngleListTableViewController: UITableViewController , UISearchBarDelegate, UITableViewDelegate, CLLocationManagerDelegate{
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var segment: UISegmentedControl!
     
     var myData: [CellData] = []
@@ -18,11 +17,23 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     var selected: Int = 0
     var searchState: Bool = false
     
+    /*Get location*/
+    var location:String=""
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         searchBar.delegate = self
+        
+        /* get location */
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy=kCLLocationAccuracyBest
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -105,6 +116,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                 let img = subJson["startup"]["logo_url"].string ?? "no image"
                 let companyURL = subJson["startup"]["company_url"].string ?? ""
                 //tags info
+                
                 var tags = [tag]()
                 for (keyTag: String, eachtag: JSON) in subJson["tags"]{
                     let tagType = eachtag["tag_type"].string ?? ""
@@ -112,10 +124,20 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                     tags.append(tag(tagType: tagType, tagName: tagName))
                 }
                 
-                newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
-                if newData != nil {
-                    self.myData.append(newData!)
+                for tag in tags{
+                    //Compare with current location
+                    if tag.tagType == "LocationTag"{
+                        var taglocation = tag.tagName;
+                        if taglocation.hasPrefix(self.location) {
+                            newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
+                            
+                            if newData != nil {
+                                self.myData.append(newData!)
+                            }
+                        }
+                    }
                 }
+               
             }
             self.tableView.reloadData()
         }//end closure
@@ -152,7 +174,6 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         return numberOfRows
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("protojob", forIndexPath: indexPath) as! AngleTableViewCell
 
@@ -173,6 +194,40 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         println("eee")
         self.selected = indexPath.row
         self.performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
+    }
+    
+    
+    /* Get Location*/
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        CLGeocoder().reverseGeocodeLocation(manager.location, completionHandler: { (placemarks, error)
+            -> Void in
+            if error != nil {
+                println("Error:"+error.localizedDescription)
+                return
+            }
+            
+            if placemarks.count>0{
+                let pm=placemarks[0] as! CLPlacemark
+                self.displayLoactionInfo(pm)
+            }
+            else{
+                println("error with data")
+            }
+            
+        })
+    }
+    
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println("error: "+error.localizedDescription)
+    }
+    
+    func displayLoactionInfo(placemark:CLPlacemark){
+        self.locationManager.stopUpdatingLocation()
+        location=placemark.locality
+        println(location)
+        println(placemark.administrativeArea)
+        
     }
     /*
     // Override to support conditional editing of the table view.
