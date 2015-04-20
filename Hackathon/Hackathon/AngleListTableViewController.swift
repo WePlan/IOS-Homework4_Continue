@@ -11,6 +11,8 @@ import UIKit
 class AngleListTableViewController: UITableViewController , UISearchBarDelegate, UITableViewDelegate, CLLocationManagerDelegate{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segment: UISegmentedControl!
+    @IBOutlet weak var locationSwitch: UIBarButtonItem!
+    @IBOutlet weak var byCurrentLocation: UISwitch!
     
     var myData: [CellData] = []
     var myFilterData: [CellData] = []
@@ -32,7 +34,6 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         self.locationManager.desiredAccuracy=kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -45,6 +46,17 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "handleRefresh", forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    @IBAction func switchMoved(sender: UISwitch) {
+        if self.byCurrentLocation.on {
+            self.locationManager.startUpdatingLocation()
+            let alertController = UIAlertController(title: "Notification", message: "You are currently at \(self.location), only the records satisfied the location limitation will be displayed.", preferredStyle: .ActionSheet)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }
+        updateData()
     }
     
     func handleRefresh() {
@@ -79,8 +91,22 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                     let tagName = eachtag["display_name"].string ?? ""
                     tags.append(tag(tagType: tagType, tagName: tagName))
                 }
-                
+                if !self.byCurrentLocation.on {
                 newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
+                }
+                else{
+                    for tag in tags{
+                        //Compare with current location
+                        if tag.tagType == "LocationTag"{
+                            var taglocation = tag.tagName;
+                            if taglocation.hasPrefix(self.location) {
+                                newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
+                                break;
+                            }
+                        }
+                    }
+                }
+                
                 if newData != nil {
                     self.myData.append(newData!)
                 }
@@ -124,20 +150,24 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                     tags.append(tag(tagType: tagType, tagName: tagName))
                 }
                 
-                for tag in tags{
-                    //Compare with current location
-                    if tag.tagType == "LocationTag"{
-                        var taglocation = tag.tagName;
-                        if taglocation.hasPrefix(self.location) {
-                            newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
-                            
-                            if newData != nil {
-                                self.myData.append(newData!)
+                if !self.byCurrentLocation.on {
+                    newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
+                }
+                else{
+                    for tag in tags{
+                        //Compare with current location
+                        if tag.tagType == "LocationTag"{
+                            var taglocation = tag.tagName;
+                            if taglocation.hasPrefix(self.location) {
+                                newData = CellData(jobTitle: jobTitle, jobType: jobType, createdAt: createAt, updatedAt: updateAt, salaryMin: salaryMin, salaryMax: salaryMax, jobDesc: jobDesc, angellistURL: angellistURL, companyName: companyName, companyFDesc: companyFDesc, companyHDesc: companyHDesc, companyLogoURL: img, companyURL: companyURL, tags: tags)
+                                break;
                             }
                         }
                     }
                 }
-               
+                if newData != nil {
+                    self.myData.append(newData!)
+                }
             }
             self.tableView.reloadData()
         }//end closure
@@ -191,7 +221,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("eee")
+        //println("eee")
         self.selected = indexPath.row
         self.performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
     }
