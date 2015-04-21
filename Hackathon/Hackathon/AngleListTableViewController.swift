@@ -226,6 +226,9 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         self.performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
     }
     
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.searchBar.resignFirstResponder()
+    }
     //MARK: - Location Kit
     
     /* Get Location*/
@@ -302,6 +305,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         self.searchBar.showsCancelButton = true
         if count(searchText) == 0 {
             self.searchState = false
+            self.searchBar.showsCancelButton = false
             self.tableView.reloadData()
             return
         }
