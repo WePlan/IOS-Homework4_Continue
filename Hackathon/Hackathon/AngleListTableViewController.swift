@@ -226,6 +226,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         self.performSegueWithIdentifier(StoryBoardConstants.detailSegue, sender: self)
     }
     
+    //MARK: - Location Kit
     
     /* Get Location*/
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
@@ -294,10 +295,14 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     }
     */
 
+    // MARK: - Search Bar
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    
+        self.searchBar.showsCancelButton = true
         if count(searchText) == 0 {
             self.searchState = false
+            self.tableView.reloadData()
             return
         }
         
@@ -340,6 +345,18 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
         
     }
     
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.text = ""
+        self.searchBar(self.searchBar, textDidChange: "")
+        self.searchBar.showsCancelButton = false
+        self.searchBar.resignFirstResponder()
+    }
+    
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = false
+        self.searchBar.resignFirstResponder()
+    }
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
