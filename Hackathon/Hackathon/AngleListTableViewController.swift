@@ -23,6 +23,8 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     var location:String=""
     let locationManager = CLLocationManager()
     
+    var refreshing: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -60,8 +62,13 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     }
     
     func handleRefresh() {
+        if self.refreshing {
+            println("handle: \(self.refreshing)")
+            return
+        }
         self.myData = []
-        
+        self.refreshing = true
+        self.refreshControl?.enabled = false
         var requestItem = request(.GET, "https://api.angel.co/1/jobs?access_token=ea35df8ec5d8542d06b196d4a50bba2ac34616d448bfd3c0&page=\(1)")
         
         requestItem.responseJSON{(request,response,data,error) in
@@ -113,6 +120,8 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
             }//for
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
+            self.refreshing = false
+            self.refreshControl?.enabled = true
         }//end closure
 
     }
@@ -120,7 +129,7 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
     private func updateData() {
         self.myData = []
         var requestItem = request(.GET, "https://api.angel.co/1/jobs?access_token=ea35df8ec5d8542d06b196d4a50bba2ac34616d448bfd3c0&page=\(1)")
-        
+        refreshing = true
         requestItem.responseJSON{(request,response,data,error) in
             var json = JSON(data!)
             
@@ -170,6 +179,8 @@ class AngleListTableViewController: UITableViewController , UISearchBarDelegate,
                 }
             }
             self.tableView.reloadData()
+            self.refreshing = false
+            println("viewdidload: \(self.refreshing)")
         }//end closure
     }
     
